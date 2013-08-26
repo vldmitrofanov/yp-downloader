@@ -1,0 +1,19 @@
+<?php
+session_start();
+require_once('main.php');
+if ( empty($_SESSION['level']) || $_SESSION['level'] < 10 ){
+    header ('Location: login.php', true, 302);
+    exit();
+}
+cabinet_html_head("YP GRABBER Dashboard","Yellow Pages","YP GRABBER Dashboard","");
+cabinet_header_wide();
+
+echo "<iframe src=\"phpMyAdmin/db_structure.php?db="._LEADS_DB_."\" width=\"100%\" frameborder=\"0\" class=\"myIframe\"></iframe>";
+echo "<script type=\"text/javascript\" language=\"javascript\"> 
+$('.myIframe').css('height', ($('#templatemo_main_wide').innerHeight()-120) +'px');
+</script>";
+echo"</div>";
+
+?>
+
+

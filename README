@@ -1,0 +1,8 @@
+YP_downloader is a php script, that allows you download leads from www.yellowpages.com
+
+5/29/2013 script defined as version 0.0.1
+only USA Business leads are available to download
+proxy list will be downloaded automatically 
+
+
+to install read INSTALL file

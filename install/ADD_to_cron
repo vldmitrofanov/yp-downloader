@@ -1,0 +1,2 @@
+*/5 * * * * /usr/local/bin/php -f /<PATH TO YOUR LOCAL FOLDER>/bg_run_controller.php > /dev/null
+0 */12 * * * /usr/local/bin/php -f /<PATH TO YOUR LOCAL FOLDER>/proxy_curl_loader.php > /dev/null

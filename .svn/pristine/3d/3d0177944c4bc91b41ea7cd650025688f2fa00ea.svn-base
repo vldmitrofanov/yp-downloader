@@ -1,0 +1,84 @@
+add function - ADD_INDUSTRY
+check quick_load, its just test file for autocomplete
+move jquery functions to new class
+
+alter table add column combined varchar(50);
+Update the current values:
+
+update table set combined = concat(zipcode, ' - ', city, ', ', state);
+Update all future values automatically:
+
+`tmp_YP_US_industry_done`
+`entry_full_code`
+
+ALTER TABLE  `YP_US_industry_done` ADD  `entry_full_code` VARCHAR( 50 ) NOT NULL AFTER  `area_done`
+
+update YP_US_industry_done set `entry_full_code` = concat(`area_done`, '-', `ind_id_done`)
+
+create trigger insert_YP_US_industry_done_trigger
+before insert on YP_US_industry_done
+for each row
+set new.entry_full_code = concat(new.area_done, '-', new.ind_id_done);
+
+create trigger update_YP_US_industry_done_trigger
+before update on YP_US_industry_done
+for each row
+set new.entry_full_code = concat(new.area_done, '-', new.ind_id_done);
+
+
+
+SELECT YP_US_industry_done.* FROM YP_US_industry_done 
+LEFT  JOIN tmp_YP_US_industry_done ON YP_US_industry_done.entry_full_code = tmp_YP_US_industry_done.entry_full_code
+WHERE tmp_YP_US_industry_done.record_id IS NULL
+
+
+
+THE RIGHT ONE:
+
+INSERT INTO YP_US_industry_done (ind_id_done,
+area_done,
+entry_full_code,
+pages_done,
+date_done,
+is_finished,
+enqueued,
+url)(
+SELECT tmp_YP_US_industry_done.* FROM tmp_YP_US_industry_done 
+LEFT  JOIN YP_US_industry_done ON tmp_YP_US_industry_done.entry_full_code = YP_US_industry_done.entry_full_code
+WHERE YP_US_industry_done.url IS NULL)
+
+
+
+SELECT * 
+INTO NewYP_US_industry_done
+FROM YP_US_industry_done
+WHERE 1 = 2
+
+
+CREATE TABLE  NewYP_US_industry_done
+AS
+SELECT *
+FROM YP_US_industry_done
+WHERE 1=2;
+
+
+
+ind_id_done
+area_done
+entry_full_code
+pages_done
+date_done
+is_finished
+enqueued
+url
+
+ 
+SELECT * FROM `YP_US_industry_done` 
+                WHERE `is_finished`='no' AND `enqueued`='no' 
+                AND (`date_done`> SUBDATE(now(),30) AND `date_done`< SUBDATE(now(), INTERVAL '1' MINUTE))
+
+'2013-05-04 01:00:00'
+
+SELECT * FROM `YP_US_industry_done` 
+                WHERE `is_finished`='no' AND `enqueued`='no' 
+                AND `date_done`> SUBDATE(now(),30) AND `date_done`< SUBDATE(now(), INTERVAL '360' MINUTE)
